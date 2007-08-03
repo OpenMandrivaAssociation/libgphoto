@@ -126,7 +126,7 @@ This package contains the scripts necessary for hotplug support.
 export DONT_STRIP=1
 CFLAGS="`echo %optflags |sed -e 's/-O3/-g/'`" CXXFLAGS="`echo %optflags |sed -e 's/-O3/-g/'`"
 %endif
-%configure2_5x --disable-rpath
+%configure2_5x --disable-rpath --with-doc-dir=%{_docdir}/%{libname}
 
 %make
 
