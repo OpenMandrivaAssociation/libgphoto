@@ -2,7 +2,7 @@
 
 %define name	libgphoto
 %define version	2.4.0
-%define release	%mkrel 2
+%define release	%mkrel 3
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -23,12 +23,12 @@ Group:		Graphics
 
 ##### SOURCE FILES #####
 
-Source: http://heanet.dl.sourceforge.net/sourceforge/gphoto/%{name}%{major}-%{version}%{?extraversion:%extraversion}.tar.bz2
+Source0: 	http://heanet.dl.sourceforge.net/sourceforge/gphoto/%{name}%{major}-%{version}%{?extraversion:%extraversion}.tar.bz2
+# Taken from the old patch2: do it as a source now as we don't want to
+# use any part of the upstream file any more
+Source1:	usbcam_agent
 
 ##### PATCHES #####
-
-# Support for dynamic
-Patch2: libgphoto2-2.1.6-dynamic.patch
 
 # Remove signatures for Pentax Optio 450
 Patch10: libgphoto2-2.4.0-pentax.patch
@@ -115,7 +115,6 @@ This package contains the scripts necessary for hotplug support.
 
 %setup -q -n %{name}%{major}-%{version}%{?extraversion:%extraversion}
 
-%patch2 -p1 -b .dynamic
 %patch10 -p1 -b .pentax
 
 ##### BUILD #####
@@ -147,7 +146,7 @@ find $RPM_BUILD_ROOT -name '*.la' | \
 
 # we should move that into the proper Makefile.am eventually
 install -d -m755 %{buildroot}/etc/udev/agents.d/usb
-install -m755 packaging/linux-hotplug/usbcam.console %{buildroot}/etc/udev/agents.d/usb/usbcam
+install -m755 %{SOURCE1} %{buildroot}/etc/udev/agents.d/usb/usbcam
 
 # Create HAL FDI file
 install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
