@@ -230,8 +230,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/*
 
 %docdir %{_docdir}/%{libname}
-%docdir %{_docdir}/%{libname}_port
 %{_docdir}/%{libname}
-%{_docdir}/%{libname}_port
 
 %doc ABOUT-NLS ChangeLog HACKING MAINTAINERS TESTERS
