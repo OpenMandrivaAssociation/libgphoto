@@ -2,7 +2,7 @@
 
 %define name	libgphoto
 %define version	2.4.0
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -93,7 +93,7 @@ Provides:	%{name}-devel = %{version}-%{release}
 Provides:	gphoto%{major}-devel = %{version}-%{release}
 Conflicts:	gphoto2 <= 2.1.0
 Obsoletes:	%{mklibname gphoto 2 -d}
-Group:		Graphics
+Group:		Development/C
 
 %description -n %{develname}
 This package contains all files which one needs to compile programs using
