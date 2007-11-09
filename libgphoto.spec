@@ -1,5 +1,3 @@
-##### GENERAL STUFF #####
-
 %define name	libgphoto
 %define version	2.4.0
 %define release	%mkrel 4
@@ -19,23 +17,13 @@ Version:	%{version}
 Release:	%{release}
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
-
-
-##### SOURCE FILES #####
-
 Source0: 	http://heanet.dl.sourceforge.net/sourceforge/gphoto/%{name}%{major}-%{version}%{?extraversion:%extraversion}.tar.bz2
 # Taken from the old patch2: do it as a source now as we don't want to
 # use any part of the upstream file any more
 Source1:	usbcam_agent
-
-##### PATCHES #####
-
 # Remove signatures for Pentax Optio 450
 Patch10: libgphoto2-2.4.0-pentax.patch
-
-##### ADDITIONAL DEFINITIONS #####
-
-Url: http://sourceforge.net/projects/gphoto/
+URL: http://sourceforge.net/projects/gphoto/
 BuildRoot: %{_tmppath}/%{name}-buildroot
 Obsoletes:	hackgphoto2
 Provides:	hackgphoto2
@@ -44,10 +32,6 @@ BuildRequires:	glib-devel libusb-devel >= 0.1.6 zlib-devel findutils perl
 BuildRequires:	libexif-devel
 BuildRequires:	udev-tools
 BuildRequires:	libltdl-devel libhal-devel >= 0.5 libjpeg-devel
-
-
-
-##### SUB-PACKAGES #####
 
 %description
 The gPhoto2 project is a universal, free application and library
