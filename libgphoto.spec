@@ -2,7 +2,7 @@
 
 %define name	libgphoto
 %define version	2.4.0
-%define release	%mkrel 3
+%define release	%mkrel 4
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -65,10 +65,12 @@ Frontends (GUI and command line) are available separately.
 %package -n %{libname}
 Summary:	Library to access to digital cameras
 Requires: 	libusb >= 0.1.5
-Requires:	%{name}-common >= 2.2.1-7mdv2007.0
+Requires:	%{name}-common >= 2.4.0-3mdv2008.0
 Provides:	%{name} = %{version}-%{release}
 Conflicts:	gphoto2 <= 2.1.0
 Conflicts:	%{libname}-devel < 2.2.1-9mdv2007.0
+Conflicts:	%{name}-common <= 2.4.0-3mdv2008.0
+Conflicts:	%{name}-hotplug <= 2.4.0-3mdv2008.0
 Group:		Graphics
 
 %description -n %{libname}
@@ -76,9 +78,9 @@ This library contains all the functionality to access to modern digital
 cameras via USB or the serial port.
 
 %package common
-Summary:	Platform-independent files for the "%{libname}" library
+Summary:	Non-library files for the "%{libname}" library
 Group:		Graphics
-Conflicts:	%{libname} <= 2.2.1-6mdv2007.0
+Conflicts:	%{libname} <= 2.4.0-3mdv2008.0
 
 %description common
 Platform-independent files for the "%{libname}" library
@@ -103,6 +105,7 @@ the "%{libname}" library.
 Summary:	Hotplug support from libgphoto
 Group:		System/Configuration/Hardware
 Requires:	udev
+Conflicts:	%{libname} <= 2.4.0-3mdv2008.0
 
 %description hotplug
 This package contains the scripts necessary for hotplug support.
@@ -125,6 +128,7 @@ This package contains the scripts necessary for hotplug support.
 export DONT_STRIP=1
 CFLAGS="`echo %optflags |sed -e 's/-O3/-g/'`" CXXFLAGS="`echo %optflags |sed -e 's/-O3/-g/'`"
 %endif
+export udevscriptdir=/%{_lib}/udev
 %configure2_5x --disable-rpath --with-doc-dir=%{_docdir}/%{libname}
 
 %make
@@ -174,7 +178,7 @@ cat libgphoto2-2.lang libgphoto2_port-0.lang > %{name}.lang
 %multiarch_binaries %buildroot%{_bindir}/gphoto2-port-config
 
 # Don't need to package this
-rm -f %{_docdir}/%{libname}/COPYING
+rm -f %{buildroot}%{_docdir}/%{libname}/COPYING
 
 ##### PRE/POST INSTALL SCRIPTS #####
 
@@ -196,26 +200,20 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/udev/rules.d/90-libgphoto2.rules
 %{_sysconfdir}/udev/agents.d/usb/usbcam
 %{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
+/%{_lib}/udev/check-ptp-camera
+/%{_lib}/udev/check-mtp-device
 
 ##### libgphoto2
 %files -n %{libname}
 %defattr(-,root,root)
 %{_libdir}/*.so.*
-# Here are only ".so" and no ".so.XXX" packages, so the ".so" have to be in
-# the main package
-%dir %{_libdir}/libgphoto2/*
-%dir %{_libdir}/libgphoto2_port/*
-%{_libdir}/libgphoto2/*/*.so
-%{_libdir}/libgphoto2/*/*.la
-%{_libdir}/libgphoto2_port/*/*.so
-%{_libdir}/libgphoto2_port/*/*.la
-%{_libdir}/udev/check-ptp-camera
-%{_libdir}/udev/check-mtp-device
 
 ##### libgphoto-common
 %files common -f %{name}.lang
 %defattr(-,root,root)
 %{_datadir}/libgphoto2
+%{_libdir}/libgphoto2
+%{_libdir}/libgphoto2_port
 
 ##### libgphoto-devel
 %files -n %{develname}
