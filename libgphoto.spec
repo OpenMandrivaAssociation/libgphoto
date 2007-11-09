@@ -110,17 +110,11 @@ Conflicts:	%{libname} <= 2.4.0-3mdv2008.0
 %description hotplug
 This package contains the scripts necessary for hotplug support.
 
-
-
-##### PREP #####
-
 %prep
 
 %setup -q -n %{name}%{major}-%{version}%{?extraversion:%extraversion}
 
 %patch10 -p1 -b .pentax
-
-##### BUILD #####
 
 %build
 
@@ -132,8 +126,6 @@ export udevscriptdir=/%{_lib}/udev
 %configure2_5x --disable-rpath --with-doc-dir=%{_docdir}/%{libname}
 
 %make
-
-##### INSTALL #####
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
@@ -180,21 +172,13 @@ cat libgphoto2-2.lang libgphoto2_port-0.lang > %{name}.lang
 # Don't need to package this
 rm -f %{buildroot}%{_docdir}/%{libname}/COPYING
 
-##### PRE/POST INSTALL SCRIPTS #####
-
 %post -n %{libname} -p /sbin/ldconfig
 
 %postun -n %{libname} -p /sbin/ldconfig
 
-##### CLEAN UP #####
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-
-##### FILE LISTS FOR ALL BINARY PACKAGES #####
-
-##### libgphoto-hotplug
 %files hotplug
 %defattr(-,root,root)
 %{_sysconfdir}/udev/rules.d/90-libgphoto2.rules
@@ -203,19 +187,16 @@ rm -rf $RPM_BUILD_ROOT
 /%{_lib}/udev/check-ptp-camera
 /%{_lib}/udev/check-mtp-device
 
-##### libgphoto2
 %files -n %{libname}
 %defattr(-,root,root)
 %{_libdir}/*.so.*
 
-##### libgphoto-common
 %files common -f %{name}.lang
 %defattr(-,root,root)
 %{_datadir}/libgphoto2
 %{_libdir}/libgphoto2
 %{_libdir}/libgphoto2_port
 
-##### libgphoto-devel
 %files -n %{develname}
 %defattr(-,root,root)
 %{_bindir}/*
