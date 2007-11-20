@@ -1,6 +1,6 @@
 %define name	libgphoto
 %define version	2.4.0
-%define release	%mkrel 4
+%define release	%mkrel 5
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -23,6 +23,8 @@ Source0: 	http://heanet.dl.sourceforge.net/sourceforge/gphoto/%{name}%{major}-%{
 Source1:	usbcam_agent
 # Remove signatures for Pentax Optio 450
 Patch10: libgphoto2-2.4.0-pentax.patch
+# (fc) 2.4.0-5mdv don't reset USB bus for Canon cameras (SVN) (Mdv bug #35642)
+Patch11: libgphoto2-2.4.0-fixcanon.patch
 URL: http://sourceforge.net/projects/gphoto/
 BuildRoot: %{_tmppath}/%{name}-buildroot
 Obsoletes:	hackgphoto2
@@ -99,6 +101,7 @@ This package contains the scripts necessary for hotplug support.
 %setup -q -n %{name}%{major}-%{version}%{?extraversion:%extraversion}
 
 %patch10 -p1 -b .pentax
+%patch11 -p1 -b .fixcanon
 
 %build
 
