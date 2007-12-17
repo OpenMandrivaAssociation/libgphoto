@@ -26,7 +26,6 @@ Patch10: libgphoto2-2.4.0-pentax.patch
 # (fc) 2.4.0-5mdv don't reset USB bus for Canon cameras (SVN) (Mdv bug #35642)
 Patch11: libgphoto2-2.4.0-fixcanon.patch
 URL: http://sourceforge.net/projects/gphoto/
-BuildRoot: %{_tmppath}/%{name}-buildroot
 Obsoletes:	hackgphoto2
 Provides:	hackgphoto2
 Conflicts:	gphoto2 <= 2.1.0
