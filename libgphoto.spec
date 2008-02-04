@@ -1,6 +1,6 @@
 %define name	libgphoto
 %define version	2.4.0
-%define release	%mkrel 5
+%define release	%mkrel 6
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -25,6 +25,8 @@ Source1:	usbcam_agent
 Patch10: libgphoto2-2.4.0-pentax.patch
 # (fc) 2.4.0-5mdv don't reset USB bus for Canon cameras (SVN) (Mdv bug #35642)
 Patch11: libgphoto2-2.4.0-fixcanon.patch
+# (fc) 2.4.0-6mdv don't append HAL info for Olympus D-535 (Mdv bug #37307)
+Patch12: libgphoto2-2.4.0-olympusd535.patch
 URL: http://sourceforge.net/projects/gphoto/
 BuildRoot: %{_tmppath}/%{name}-buildroot
 Obsoletes:	hackgphoto2
@@ -102,6 +104,7 @@ This package contains the scripts necessary for hotplug support.
 
 %patch10 -p1 -b .pentax
 %patch11 -p1 -b .fixcanon
+%patch12 -p1 -b .olympusd535
 
 %build
 
