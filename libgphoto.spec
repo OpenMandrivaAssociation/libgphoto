@@ -1,6 +1,6 @@
 %define name	libgphoto
 %define version	2.4.0
-%define release	%mkrel 6
+%define release	%mkrel 7
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -27,6 +27,12 @@ Patch10: libgphoto2-2.4.0-pentax.patch
 Patch11: libgphoto2-2.4.0-fixcanon.patch
 # (fc) 2.4.0-6mdv don't append HAL info for Olympus D-535 (Mdv bug #37307)
 Patch12: libgphoto2-2.4.0-olympusd535.patch
+# (fc) 2.4.0-7mdv handle up to 2048 photos per directory (Mdv bug #39710) (Robin Rosenberg)
+Patch13: libgphoto2-2.4.0-increaselimit.patch
+# (fc) 2.4.0-7mdv fix FDI file for latest HAL (SVN)
+Patch14: libgphoto2-2.4.0-fixfdi.patch
+# (fc) 2.4.0-7mdv fix udev rule for latest kernel (SVN)
+Patch15: libgphoto2-2.4.0-fixudev.patch
 URL: http://sourceforge.net/projects/gphoto/
 BuildRoot: %{_tmppath}/%{name}-buildroot
 Obsoletes:	hackgphoto2
@@ -105,6 +111,9 @@ This package contains the scripts necessary for hotplug support.
 %patch10 -p1 -b .pentax
 %patch11 -p1 -b .fixcanon
 %patch12 -p1 -b .olympusd535
+%patch13 -p1 -b .increaselimit
+%patch14 -p1 -b .fixfdi
+%patch15 -p1 -b .fixudev
 
 %build
 
