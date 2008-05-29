@@ -1,6 +1,6 @@
 %define name	libgphoto
 %define version	2.4.1
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -28,7 +28,7 @@ BuildRoot: %{_tmppath}/%{name}-buildroot
 Obsoletes:	hackgphoto2
 Provides:	hackgphoto2
 Conflicts:	gphoto2 <= 2.1.0
-BuildRequires:	glib-devel libusb-devel >= 0.1.6 zlib-devel findutils perl
+BuildRequires:	libusb-devel >= 0.1.6 zlib-devel findutils perl
 BuildRequires:	libexif-devel
 BuildRequires:	udev-tools
 BuildRequires:	libltdl-devel libhal-devel >= 0.5 libjpeg-devel
