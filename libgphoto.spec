@@ -1,13 +1,11 @@
 %define name	libgphoto
-%define version	2.4.1
-%define release	%mkrel 2
+%define version	2.4.2
+%define release	%mkrel 1
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
 %define develname	%mklibname gphoto -d
 
-# Enable debug mode
-%define debug 0
 
 %define extraversion %nil
 
@@ -23,6 +21,8 @@ Source0: 	http://heanet.dl.sourceforge.net/sourceforge/gphoto/%{name}%{major}-%{
 Source1:	usbcam_agent
 # (fc) 2.4.0-7mdv handle up to 2048 photos per directory (Mdv bug #39710) (Robin Rosenberg)
 Patch13: libgphoto2-2.4.0-increaselimit.patch
+# (fc) 2.4.2-1mdv add support for Nokia N82 mobile phone
+Patch14: libgphoto2-2.4.2-n82.patch
 URL: http://sourceforge.net/projects/gphoto/
 BuildRoot: %{_tmppath}/%{name}-buildroot
 Obsoletes:	hackgphoto2
@@ -99,13 +99,10 @@ This package contains the scripts necessary for hotplug support.
 %setup -q -n %{name}%{major}-%{version}%{?extraversion:%extraversion}
 
 %patch13 -p1 -b .increaselimit
+%patch14 -p1 -b .n82
 
 %build
 
-%if %debug
-export DONT_STRIP=1
-CFLAGS="`echo %optflags |sed -e 's/-O3/-g/'`" CXXFLAGS="`echo %optflags |sed -e 's/-O3/-g/'`"
-%endif
 export udevscriptdir=/%{_lib}/udev
 %configure2_5x --disable-rpath --with-doc-dir=%{_docdir}/%{libname}
 
@@ -113,10 +110,6 @@ export udevscriptdir=/%{_lib}/udev
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
-
-%if %debug
-export DONT_STRIP=1
-%endif
 
 %makeinstall_std
 
