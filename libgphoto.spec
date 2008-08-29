@@ -1,6 +1,6 @@
 %define name	libgphoto
 %define version	2.4.2
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -103,7 +103,7 @@ This package contains the scripts necessary for hotplug support.
 
 %build
 
-export udevscriptdir=/%{_lib}/udev
+export udevscriptdir=/lib/udev
 %configure2_5x --disable-rpath --with-doc-dir=%{_docdir}/%{libname}
 
 %make
@@ -165,8 +165,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/udev/rules.d/90-libgphoto2.rules
 %{_sysconfdir}/udev/agents.d/usb/usbcam
 %{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
-/%{_lib}/udev/check-ptp-camera
-/%{_lib}/udev/check-mtp-device
+/lib/udev/check-ptp-camera
+/lib/udev/check-mtp-device
 
 %files -n %{libname}
 %defattr(-,root,root)
