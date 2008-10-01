@@ -124,7 +124,7 @@ install -m755 %{SOURCE1} %{buildroot}/etc/udev/agents.d/usb/usbcam
 # Create HAL FDI file
 install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
 	export LIBDIR=%{buildroot}%{_libdir}
-	export CAMLIBS=%{buildroot}%{_libdir}/libgphoto2/2.4.0
+	export CAMLIBS=%{buildroot}%{_libdir}/libgphoto2/%{version}
 	export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 	%{buildroot}%{_libdir}/libgphoto2/print-camera-list hal-fdi | \
 	grep -v "<!-- This file was generated" \
@@ -133,7 +133,7 @@ install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
 # Create udev rules file
 install -d -m755 %{buildroot}/etc/udev/rules.d/
 	export LIBDIR=%{buildroot}%{_libdir}
-	export CAMLIBS=%{buildroot}%{_libdir}/libgphoto2/2.4.0
+	export CAMLIBS=%{buildroot}%{_libdir}/libgphoto2/%{version}
 	export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 	%{buildroot}%{_libdir}/libgphoto2/print-camera-list udev-rules mode 0660 \
 	> %{buildroot}/etc/udev/rules.d/90-libgphoto2.rules
