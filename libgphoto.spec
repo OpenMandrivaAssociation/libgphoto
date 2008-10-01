@@ -1,6 +1,6 @@
 %define name	libgphoto
 %define version	2.4.2
-%define release	%mkrel 2
+%define release	%mkrel 3
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -113,6 +113,10 @@ rm -rf ${RPM_BUILD_ROOT}
 
 %makeinstall_std
 
+# remove unused udev helpers, this is now handled by hal
+rm -f $RPM_BUILD_ROOT/lib/udev/check-ptp-camera \
+      $RPM_BUILD_ROOT/lib/udev/check-mtp-device
+
 # Fix up libtool libraries.
 find $RPM_BUILD_ROOT -name '*.la' | \
 	xargs perl -p -i -e "s|$RPM_BUILD_ROOT||g"
@@ -156,8 +160,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %{_sysconfdir}/udev/agents.d/usb/usbcam
 %{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
-/lib/udev/check-ptp-camera
-/lib/udev/check-mtp-device
 
 %files -n %{libname}
 %defattr(-,root,root)
