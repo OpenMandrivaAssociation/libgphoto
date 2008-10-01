@@ -130,14 +130,6 @@ install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
 	grep -v "<!-- This file was generated" \
 	> %{buildroot}/%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
 
-# Create udev rules file
-install -d -m755 %{buildroot}/etc/udev/rules.d/
-	export LIBDIR=%{buildroot}%{_libdir}
-	export CAMLIBS=%{buildroot}%{_libdir}/libgphoto2/%{version}
-	export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
-	%{buildroot}%{_libdir}/libgphoto2/print-camera-list udev-rules mode 0660 \
-	> %{buildroot}/etc/udev/rules.d/90-libgphoto2.rules
-
 %find_lang libgphoto2-2
 %find_lang libgphoto2_port-0
 cat libgphoto2-2.lang libgphoto2_port-0.lang > %{name}.lang
@@ -162,7 +154,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files hotplug
 %defattr(-,root,root)
-%{_sysconfdir}/udev/rules.d/90-libgphoto2.rules
 %{_sysconfdir}/udev/agents.d/usb/usbcam
 %{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
 /lib/udev/check-ptp-camera
