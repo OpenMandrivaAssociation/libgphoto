@@ -1,6 +1,6 @@
 %define name	libgphoto
-%define version	2.4.2
-%define release	%mkrel 3
+%define version	2.4.4
+%define release	%mkrel 1
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -19,17 +19,16 @@ Source0: 	http://heanet.dl.sourceforge.net/sourceforge/gphoto/%{name}%{major}-%{
 # Taken from the old patch2: do it as a source now as we don't want to
 # use any part of the upstream file any more
 Source1:	usbcam_agent
+Patch0:		libgphoto2-2.4.4-fix-str-fmt.patch
 # (fc) 2.4.0-7mdv handle up to 2048 photos per directory (Mdv bug #39710) (Robin Rosenberg)
 Patch13: libgphoto2-2.4.0-increaselimit.patch
-# (fc) 2.4.2-1mdv add support for Nokia N82 mobile phone
-Patch14: libgphoto2-2.4.2-n82.patch
 URL: http://sourceforge.net/projects/gphoto/
 BuildRoot: %{_tmppath}/%{name}-buildroot
 Obsoletes:	hackgphoto2
 Provides:	hackgphoto2
 Conflicts:	gphoto2 <= 2.1.0
 BuildRequires:	libusb-devel >= 0.1.6 zlib-devel findutils perl
-BuildRequires:	libexif-devel
+BuildRequires:	libexif-devel resmgr-devel
 BuildRequires:	udev-tools
 BuildRequires:	libltdl-devel libhal-devel >= 0.5 libjpeg-devel
 
@@ -95,11 +94,9 @@ Conflicts:	%{libname} <= 2.4.0-3mdv2008.0
 This package contains the scripts necessary for hotplug support.
 
 %prep
-
 %setup -q -n %{name}%{major}-%{version}%{?extraversion:%extraversion}
-
+%patch0 -p0 -b .str
 %patch13 -p1 -b .increaselimit
-%patch14 -p1 -b .n82
 
 %build
 
