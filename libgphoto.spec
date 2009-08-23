@@ -1,6 +1,6 @@
 %define name	libgphoto
-%define version	2.4.6
-%define release	%mkrel 2
+%define version	2.4.7
+%define release	%mkrel 1
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -19,7 +19,7 @@ Source0: 	http://heanet.dl.sourceforge.net/sourceforge/gphoto/%{name}%{major}-%{
 # Taken from the old patch2: do it as a source now as we don't want to
 # use any part of the upstream file any more
 Source1:	usbcam_agent
-Patch0:		libgphoto2-2.4.5-fix-str-fmt.patch
+Patch0:		libgphoto2-2.4.7-fix-str-fmt.patch
 # (fc) 2.4.0-7mdv handle up to 2048 photos per directory (Mdv bug #39710) (Robin Rosenberg)
 Patch13: libgphoto2-2.4.0-increaselimit.patch
 URL: http://sourceforge.net/projects/gphoto/
@@ -95,7 +95,7 @@ This package contains the scripts necessary for hotplug support.
 
 %prep
 %setup -q -n %{name}%{major}-%{version}%{?extraversion:%extraversion}
-%patch0 -p0 -b .str
+%patch0 -p1 -b .str
 %patch13 -p1 -b .increaselimit
 
 %build
