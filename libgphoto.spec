@@ -1,6 +1,6 @@
 %define name	libgphoto
 %define version	2.4.7
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -16,9 +16,6 @@ Release:	%{release}
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Source0: 	http://heanet.dl.sourceforge.net/sourceforge/gphoto/%{name}%{major}-%{version}%{?extraversion:%extraversion}.tar.bz2
-# Taken from the old patch2: do it as a source now as we don't want to
-# use any part of the upstream file any more
-Source1:	usbcam_agent
 Patch0:		libgphoto2-2.4.7-fix-str-fmt.patch
 # (fc) 2.4.0-7mdv handle up to 2048 photos per directory (Mdv bug #39710) (Robin Rosenberg)
 Patch13: libgphoto2-2.4.0-increaselimit.patch
@@ -64,6 +61,8 @@ cameras via USB or the serial port.
 Summary:	Non-library files for the "%{libname}" library
 Group:		Graphics
 Conflicts:	%{libname} <= 2.4.0-3mdv2008.0
+Obsoletes:	%{libname}-hotplug <= 2.4.7-2mdv2010.0
+Provides:	%{libname}-hotplug = %{version}-%{release}
 
 %description common
 Platform-independent files for the "%{libname}" library
@@ -84,15 +83,6 @@ Group:		Development/C
 This package contains all files which one needs to compile programs using
 the "%{libname}" library.
 
-%package hotplug
-Summary:	Hotplug support from libgphoto
-Group:		System/Configuration/Hardware
-Requires:	udev
-Conflicts:	%{libname} <= 2.4.0-3mdv2008.0
-
-%description hotplug
-This package contains the scripts necessary for hotplug support.
-
 %prep
 %setup -q -n %{name}%{major}-%{version}%{?extraversion:%extraversion}
 %patch0 -p1 -b .str
@@ -110,17 +100,13 @@ rm -rf ${RPM_BUILD_ROOT}
 
 %makeinstall_std
 
-# remove unused udev helpers, this is now handled by hal
+# obsolete with recent udev or hal
 rm -f $RPM_BUILD_ROOT/lib/udev/check-ptp-camera \
       $RPM_BUILD_ROOT/lib/udev/check-mtp-device
 
 # Fix up libtool libraries.
 find $RPM_BUILD_ROOT -name '*.la' | \
 	xargs perl -p -i -e "s|$RPM_BUILD_ROOT||g"
-
-# we should move that into the proper Makefile.am eventually
-install -d -m755 %{buildroot}/etc/udev/agents.d/usb
-install -m755 %{SOURCE1} %{buildroot}/etc/udev/agents.d/usb/usbcam
 
 # Create HAL FDI file
 install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
@@ -130,6 +116,15 @@ install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
 	%{buildroot}%{_libdir}/libgphoto2/print-camera-list hal-fdi | \
 	grep -v "<!-- This file was generated" \
 	> %{buildroot}/%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
+
+# # Output udev rules for device identification; this is used by GVfs gphoto2
+# backend and others.
+#
+# Btw, since it's /lib/udev, never e.g. /lib64/udev, we hardcode the path
+#
+mkdir -p $RPM_BUILD_ROOT/lib/udev/rules.d
+$RPM_BUILD_ROOT%{_libdir}/libgphoto2/print-camera-list udev-rules version 136 > $RPM_BUILD_ROOT/lib/udev/rules.d/40-libgphoto2.rules
+
 
 %find_lang libgphoto2-2
 %find_lang libgphoto2_port-0
@@ -153,11 +148,6 @@ rm -f %{buildroot}%{_docdir}/%{libname}/COPYING
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files hotplug
-%defattr(-,root,root)
-%{_sysconfdir}/udev/agents.d/usb/usbcam
-%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
-
 %files -n %{libname}
 %defattr(-,root,root)
 %{_libdir}/*.so.*
@@ -167,6 +157,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/libgphoto2
 %{_libdir}/libgphoto2
 %{_libdir}/libgphoto2_port
+%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
+/lib/udev/rules.d/40-libgphoto2.rules
 
 %files -n %{develname}
 %defattr(-,root,root)
