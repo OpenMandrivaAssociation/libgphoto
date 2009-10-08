@@ -1,6 +1,6 @@
 %define name	libgphoto
 %define version	2.4.7
-%define release	%mkrel 2
+%define release	%mkrel 3
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
@@ -61,8 +61,8 @@ cameras via USB or the serial port.
 Summary:	Non-library files for the "%{libname}" library
 Group:		Graphics
 Conflicts:	%{libname} <= 2.4.0-3mdv2008.0
-Obsoletes:	%{libname}-hotplug <= 2.4.7-2mdv2010.0
-Provides:	%{libname}-hotplug = %{version}-%{release}
+Obsoletes:	%{name}-hotplug <= 2.4.7-2mdv2010.0
+Provides:	%{name}-hotplug = %{version}-%{release}
 
 %description common
 Platform-independent files for the "%{libname}" library
