@@ -1,6 +1,6 @@
 %define name	libgphoto
 %define version	2.4.7
-%define release	%mkrel 4
+%define release	%mkrel 5
 
 %define major		2
 %define libname		%mklibname gphoto %{major}
