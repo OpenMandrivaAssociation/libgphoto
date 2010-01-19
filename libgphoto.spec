@@ -27,7 +27,7 @@ Obsoletes:	hackgphoto2
 Provides:	hackgphoto2
 Conflicts:	gphoto2 <= 2.1.0
 BuildRequires:	libusb-devel >= 0.1.6 zlib-devel findutils perl
-BuildRequires:	libexif-devel resmgr-devel
+BuildRequires:	libexif-devel lockdev-devel
 BuildRequires:	udev-tools
 BuildRequires:	libltdl-devel libhal-devel >= 0.5 libjpeg-devel
 
@@ -94,7 +94,7 @@ the "%{libname}" library.
 %build
 
 export udevscriptdir=/lib/udev
-%configure2_5x --disable-rpath --with-doc-dir=%{_docdir}/%{libname}
+%configure2_5x --disable-rpath --with-doc-dir=%{_docdir}/%{libname} --disable-resmgr --disable-baudboy --disable-ttylock
 
 %make
 
