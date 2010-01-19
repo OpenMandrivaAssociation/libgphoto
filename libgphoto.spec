@@ -3,6 +3,7 @@
 %define release	%mkrel 6
 
 %define major		2
+%define major_port	0
 %define libname		%mklibname gphoto %{major}
 %define develname	%mklibname gphoto -d
 
@@ -29,7 +30,7 @@ Conflicts:	gphoto2 <= 2.1.0
 BuildRequires:	libusb-devel >= 0.1.6 zlib-devel findutils perl
 BuildRequires:	libexif-devel lockdev-devel
 BuildRequires:	udev-tools
-BuildRequires:	libltdl-devel libhal-devel >= 0.5 libjpeg-devel
+BuildRequires:	libltdl-devel libjpeg-devel
 
 %description
 The gPhoto2 project is a universal, free application and library
@@ -99,34 +100,34 @@ export udevscriptdir=/lib/udev
 %make
 
 %install
-rm -rf ${RPM_BUILD_ROOT}
+rm -rf %{buildroot}
 
 %makeinstall_std
 
 # obsolete with recent udev or hal
-rm -f $RPM_BUILD_ROOT/lib/udev/check-ptp-camera \
-      $RPM_BUILD_ROOT/lib/udev/check-mtp-device
+rm -f %{buildroot}/lib/udev/check-ptp-camera \
+      %{buildroot}/lib/udev/check-mtp-device
 
 # Fix up libtool libraries.
-find $RPM_BUILD_ROOT -name '*.la' | \
-	xargs perl -p -i -e "s|$RPM_BUILD_ROOT||g"
+find %{buildroot} -name '*.la' | \
+	xargs perl -p -i -e "s|%{buildroot}||g"
 
 # Create HAL FDI file
-install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
-	export LIBDIR=%{buildroot}%{_libdir}
-	export CAMLIBS=%{buildroot}%{_libdir}/libgphoto2/%{version}
-	export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
-	%{buildroot}%{_libdir}/libgphoto2/print-camera-list hal-fdi | \
-	grep -v "<!-- This file was generated" \
-	> %{buildroot}/%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
+#install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
+#	export LIBDIR=%{buildroot}%{_libdir}
+#	export CAMLIBS=%{buildroot}%{_libdir}/libgphoto2/%{version}
+#	export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
+#	%{buildroot}%{_libdir}/libgphoto2/print-camera-list hal-fdi | \
+#	grep -v "<!-- This file was generated" \
+#	> %{buildroot}/%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
 
 # # Output udev rules for device identification; this is used by GVfs gphoto2
 # backend and others.
 #
 # Btw, since it's /lib/udev, never e.g. /lib64/udev, we hardcode the path
 #
-mkdir -p $RPM_BUILD_ROOT/lib/udev/rules.d
-$RPM_BUILD_ROOT%{_libdir}/libgphoto2/print-camera-list udev-rules version 136 > $RPM_BUILD_ROOT/lib/udev/rules.d/40-libgphoto2.rules
+mkdir -p %{buildroot}/lib/udev/rules.d
+%{buildroot}%{_libdir}/libgphoto2/print-camera-list udev-rules version 136 > %{buildroot}/lib/udev/rules.d/40-libgphoto2.rules
 
 
 %find_lang libgphoto2-2
@@ -149,18 +150,19 @@ rm -f %{buildroot}%{_docdir}/%{libname}/COPYING
 %endif
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{major}*
+%{_libdir}/*.so.%{major_port}*
 
 %files common -f %{name}.lang
 %defattr(-,root,root)
 %{_datadir}/libgphoto2
 %{_libdir}/libgphoto2
 %{_libdir}/libgphoto2_port
-%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
+#%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
 /lib/udev/rules.d/40-libgphoto2.rules
 
 %files -n %{develname}
