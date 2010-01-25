@@ -124,7 +124,7 @@ find %{buildroot} -name '*.la' | \
 # Btw, since it's /lib/udev, never e.g. /lib64/udev, we hardcode the path
 #
 mkdir -p %{buildroot}/lib/udev/rules.d
-%{buildroot}%{_libdir}/libgphoto2/print-camera-list udev-rules version 136 > %{buildroot}/lib/udev/rules.d/40-libgphoto2.rules
+LD_LIBRARY_PATH=%{buildroot}/%{_libdir} %{buildroot}%{_libdir}/libgphoto2/print-camera-list udev-rules version 136 > %{buildroot}/lib/udev/rules.d/40-libgphoto2.rules
 
 
 %find_lang libgphoto2-2
