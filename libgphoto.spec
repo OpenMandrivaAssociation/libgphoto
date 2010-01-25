@@ -1,6 +1,6 @@
 %define name	libgphoto
-%define version	2.4.7
-%define release	%mkrel 7
+%define version	2.4.8
+%define release	%mkrel 1
 
 %define major		2
 %define major_port	0
@@ -20,8 +20,6 @@ Source0: 	http://heanet.dl.sourceforge.net/sourceforge/gphoto/%{name}%{major}-%{
 Patch0:		libgphoto2-2.4.7-fix-str-fmt.patch
 # (fc) 2.4.0-7mdv handle up to 8192 photos per directory (Mdv bug #39710) (Robin Rosenberg)
 Patch13: libgphoto2-2.4.0-increaselimit.patch
-# (fc) 2.4.7-4mdv fix media player detection (Ubuntu)
-Patch14: libgphoto2-2.4.7-mtp-media-player.patch
 URL: http://sourceforge.net/projects/gphoto/
 BuildRoot: %{_tmppath}/%{name}-buildroot
 Obsoletes:	hackgphoto2
@@ -90,7 +88,6 @@ the "%{libname}" library.
 %setup -q -n %{name}%{major}-%{version}%{?extraversion:%extraversion}
 %patch0 -p1 -b .str
 %patch13 -p1 -b .increaselimit
-%patch14 -p1 -b .mediaplayer
 
 %build
 
