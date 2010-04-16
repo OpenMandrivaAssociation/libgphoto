@@ -1,5 +1,5 @@
 %define name	libgphoto
-%define version	2.4.8
+%define version	2.4.9
 %define release	%mkrel 1
 
 %define major		2
@@ -17,7 +17,7 @@ Release:	%{release}
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Source0: 	http://heanet.dl.sourceforge.net/sourceforge/gphoto/%{name}%{major}-%{version}%{?extraversion:%extraversion}.tar.bz2
-Patch0:		libgphoto2-2.4.7-fix-str-fmt.patch
+Patch0:		libgphoto2-2.4.9-fix-str-fmt.patch
 # (fc) 2.4.0-7mdv handle up to 8192 photos per directory (Mdv bug #39710) (Robin Rosenberg)
 Patch13: libgphoto2-2.4.0-increaselimit.patch
 URL: http://sourceforge.net/projects/gphoto/
