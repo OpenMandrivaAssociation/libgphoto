@@ -1,6 +1,6 @@
 %define name	libgphoto
 %define version	2.4.9
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 %define major		2
 %define major_port	0
