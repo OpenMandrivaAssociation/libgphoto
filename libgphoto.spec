@@ -1,6 +1,6 @@
 %define name	libgphoto
 %define version	2.4.9
-%define release	%mkrel 2
+%define release	%mkrel 3
 
 %define major		2
 %define major_port	0
@@ -29,6 +29,7 @@ BuildRequires:	libusb-devel >= 0.1.6 zlib-devel findutils perl
 BuildRequires:	libexif-devel lockdev-devel
 BuildRequires:	udev-tools
 BuildRequires:	libltdl-devel libjpeg-devel
+BuildRequires:	libhal-devel
 
 %description
 The gPhoto2 project is a universal, free application and library
@@ -110,13 +111,13 @@ find %{buildroot} -name '*.la' | \
 	xargs perl -p -i -e "s|%{buildroot}||g"
 
 # Create HAL FDI file
-#install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
-#	export LIBDIR=%{buildroot}%{_libdir}
-#	export CAMLIBS=%{buildroot}%{_libdir}/libgphoto2/%{version}
-#	export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
-#	%{buildroot}%{_libdir}/libgphoto2/print-camera-list hal-fdi | \
-#	grep -v "<!-- This file was generated" \
-#	> %{buildroot}/%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
+install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
+	export LIBDIR=%{buildroot}%{_libdir}
+	export CAMLIBS=%{buildroot}%{_libdir}/libgphoto2/%{version}
+	export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
+	%{buildroot}%{_libdir}/libgphoto2/print-camera-list hal-fdi | \
+	grep -v "<!-- This file was generated" \
+	> %{buildroot}/%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
 
 # # Output udev rules for device identification; this is used by GVfs gphoto2
 # backend and others.
@@ -159,7 +160,7 @@ rm -rf %{buildroot}
 %{_datadir}/libgphoto2
 %{_libdir}/libgphoto2
 %{_libdir}/libgphoto2_port
-#%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
+%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
 /lib/udev/rules.d/40-libgphoto2.rules
 
 %files -n %{develname}
