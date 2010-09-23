@@ -30,6 +30,7 @@ BuildRequires:	libexif-devel lockdev-devel
 BuildRequires:	udev-tools
 BuildRequires:	libltdl-devel libjpeg-devel
 BuildRequires:	libhal-devel
+BuildRequires:	gd-devel
 
 %description
 The gPhoto2 project is a universal, free application and library
