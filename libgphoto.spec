@@ -1,5 +1,5 @@
 %define name	libgphoto
-%define version	2.4.10
+%define version	2.4.10.1
 %define release	%mkrel 1
 
 %define major		2
@@ -16,19 +16,24 @@ Version:	%{version}
 Release:	%{release}
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
-Source0: 	http://downloads.sourceforge.net/project/gphoto/%{name}/%{version}/%{name}%{major}-%{version}%{?extraversion:%extraversion}.tar.bz2
+Source0:	http://downloads.sourceforge.net/project/gphoto/%{name}/%{version}/%{name}%{major}-%{version}%{?extraversion:%extraversion}.tar.bz2
 Patch0:		libgphoto2-2.4.10-fix-str-fmt.patch
 # (fc) 2.4.0-7mdv handle up to 8192 photos per directory (Mdv bug #39710) (Robin Rosenberg)
-Patch13: libgphoto2-2.4.0-increaselimit.patch
-URL: http://sourceforge.net/projects/gphoto/
-BuildRoot: %{_tmppath}/%{name}-buildroot
-Obsoletes:	hackgphoto2
+Patch13:	libgphoto2-2.4.0-increaselimit.patch
+URL:		http://sourceforge.net/projects/gphoto/
+BuildRoot:	%{_tmppath}/%{name}-buildroot
+Obsoletes:	hackgphoto2 < %{version}
 Provides:	hackgphoto2
 Conflicts:	gphoto2 <= 2.1.0
-BuildRequires:	libusb-devel >= 0.1.6 zlib-devel findutils perl
-BuildRequires:	libexif-devel lockdev-devel
+BuildRequires:	libusb-devel >= 0.1.6
+BuildRequires:	zlib-devel
+BuildRequires:	findutils
+BuildRequires:	perl
+BuildRequires:	libexif-devel
+BuildRequires:	lockdev-devel
 BuildRequires:	udev-tools
-BuildRequires:	libltdl-devel libjpeg-devel
+BuildRequires:	libltdl-devel
+BuildRequires:	libjpeg-devel
 BuildRequires:	libhal-devel
 BuildRequires:	gd-devel
 
@@ -47,7 +52,7 @@ Frontends (GUI and command line) are available separately.
 
 %package -n %{libname}
 Summary:	Library to access to digital cameras
-Requires: 	libusb >= 0.1.5
+Requires:	libusb >= 0.1.5
 Requires:	%{name}-common >= 2.4.0-3mdv2008.0
 Provides:	%{name} = %{version}-%{release}
 Conflicts:	gphoto2 <= 2.1.0
@@ -72,14 +77,14 @@ Platform-independent files for the "%{libname}" library
 
 %package -n %{develname}
 Summary:	Headers and links to compile against the "%{libname}" library
-Requires: 	%{libname} >= %{version}
+Requires:	%{libname} >= %{version}
 Requires:	libexif-devel
 Requires:	multiarch-utils
 Requires:	libusb-devel >= 0.1.11
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	gphoto%{major}-devel = %{version}-%{release}
 Conflicts:	gphoto2 <= 2.1.0
-Obsoletes:	%{mklibname gphoto 2 -d}
+Obsoletes:	%{mklibname gphoto 2 -d} < %{version}-%{release}
 Group:		Development/C
 
 %description -n %{develname}
@@ -94,7 +99,12 @@ the "%{libname}" library.
 %build
 
 export udevscriptdir=/lib/udev
-%configure2_5x --disable-rpath --with-doc-dir=%{_docdir}/%{libname} --disable-resmgr --disable-baudboy --disable-ttylock
+%configure2_5x \
+	--disable-rpath \
+	--with-doc-dir=%{_docdir}/%{libname} \
+	--disable-resmgr \
+	--disable-baudboy \
+	--disable-ttylock
 
 %make
 
