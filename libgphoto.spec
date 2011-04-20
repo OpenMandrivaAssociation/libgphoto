@@ -1,5 +1,7 @@
+%bcond_with hal
+
 %define name	libgphoto
-%define version	2.4.10.1
+%define version	2.4.11
 %define release	%mkrel 1
 
 %define major		2
@@ -34,7 +36,9 @@ BuildRequires:	lockdev-devel
 BuildRequires:	udev-tools
 BuildRequires:	libltdl-devel
 BuildRequires:	libjpeg-devel
+%if %{with hal}
 BuildRequires:	libhal-devel
+%endif
 BuildRequires:	gd-devel
 
 %description
@@ -121,6 +125,7 @@ rm -f %{buildroot}/lib/udev/check-ptp-camera \
 find %{buildroot} -name '*.la' | \
 	xargs perl -p -i -e "s|%{buildroot}||g"
 
+%if %{with hal}
 # Create HAL FDI file
 install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
 	export LIBDIR=%{buildroot}%{_libdir}
@@ -129,6 +134,7 @@ install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
 	%{buildroot}%{_libdir}/libgphoto2/print-camera-list hal-fdi | \
 	grep -v "<!-- This file was generated" \
 	> %{buildroot}/%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
+%endif
 
 # # Output udev rules for device identification; this is used by GVfs gphoto2
 # backend and others.
@@ -171,7 +177,9 @@ rm -rf %{buildroot}
 %{_datadir}/libgphoto2
 %{_libdir}/libgphoto2
 %{_libdir}/libgphoto2_port
+%if %{with hal}
 %{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
+%endif
 /lib/udev/rules.d/40-libgphoto2.rules
 
 %files -n %{develname}
