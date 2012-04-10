@@ -2,7 +2,7 @@
 
 %define name	libgphoto
 %define version	2.4.11
-%define release	%mkrel 1
+%define release	%mkrel 2
 
 %define major		2
 %define major_port	0
@@ -121,10 +121,6 @@ rm -rf %{buildroot}
 rm -f %{buildroot}/lib/udev/check-ptp-camera \
       %{buildroot}/lib/udev/check-mtp-device
 
-# Fix up libtool libraries.
-find %{buildroot} -name '*.la' | \
-	xargs perl -p -i -e "s|%{buildroot}||g"
-
 %if %{with hal}
 # Create HAL FDI file
 install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
@@ -186,7 +182,6 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_bindir}/*
 %{_includedir}/gphoto2
-%{_libdir}/*.la
 %{_libdir}/*.so
 
 %{_libdir}/pkgconfig/*
