@@ -33,7 +33,7 @@ BuildRequires:	findutils
 BuildRequires:	perl
 BuildRequires:	libexif-devel
 BuildRequires:	lockdev-devel
-BuildRequires:	udev-tools
+BuildRequires:	udev
 BuildRequires:	libtool-devel
 BuildRequires:	libjpeg-devel
 %if %{with hal}
