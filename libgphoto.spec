@@ -34,7 +34,7 @@ BuildRequires:	perl
 BuildRequires:	libexif-devel
 BuildRequires:	lockdev-devel
 BuildRequires:	udev-tools
-BuildRequires:	libltdl-devel
+BuildRequires:	libtool-devel
 BuildRequires:	libjpeg-devel
 %if %{with hal}
 BuildRequires:	libhal-devel
