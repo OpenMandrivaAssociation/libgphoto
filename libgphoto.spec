@@ -147,18 +147,11 @@ cat libgphoto2-2.lang libgphoto2_port-0.lang > %{name}.lang
 
 # Multiarch setup
 %multiarch_binaries %buildroot%{_bindir}/gphoto2-config
+
 %multiarch_binaries %buildroot%{_bindir}/gphoto2-port-config
 
 # Don't need to package this
 rm -f %{buildroot}%{_docdir}/%{libname}/COPYING
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
 
 %clean
 rm -rf %{buildroot}
