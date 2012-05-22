@@ -1,29 +1,22 @@
 %bcond_with hal
 
-%define name	libgphoto
-%define version	2.4.11
-%define release	%mkrel 2
-
 %define major		2
 %define major_port	0
 %define libname		%mklibname gphoto %{major}
 %define develname	%mklibname gphoto -d
 
-
 %define extraversion %nil
 
 Summary:	Library to access digital cameras
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		libgphoto
+Version:	2.4.14
+Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Source0:	http://downloads.sourceforge.net/project/gphoto/%{name}/%{version}/%{name}%{major}-%{version}%{?extraversion:%extraversion}.tar.bz2
-Patch0:		libgphoto2-2.4.11-fix-str-fmt.patch
 # (fc) 2.4.0-7mdv handle up to 8192 photos per directory (Mdv bug #39710) (Robin Rosenberg)
 Patch13:	libgphoto2-2.4.0-increaselimit.patch
 URL:		http://sourceforge.net/projects/gphoto/
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 Obsoletes:	hackgphoto2 < %{version}
 Provides:	hackgphoto2
 Conflicts:	gphoto2 <= 2.1.0
@@ -97,7 +90,6 @@ the "%{libname}" library.
 
 %prep
 %setup -q -n %{name}%{major}-%{version}%{?extraversion:%extraversion}
-%patch0 -p1 -b .str
 %patch13 -p1 -b .increaselimit
 
 %build
@@ -113,7 +105,6 @@ export udevscriptdir=/lib/udev
 %make
 
 %install
-rm -rf %{buildroot}
 
 %makeinstall_std
 
@@ -153,16 +144,14 @@ cat libgphoto2-2.lang libgphoto2_port-0.lang > %{name}.lang
 # Don't need to package this
 rm -f %{buildroot}%{_docdir}/%{libname}/COPYING
 
-%clean
-rm -rf %{buildroot}
+# cleanup
+rm -f %{buildroot}%{_libdir}/*.la
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/*.so.%{major}*
 %{_libdir}/*.so.%{major_port}*
 
 %files common -f %{name}.lang
-%defattr(-,root,root)
 %{_datadir}/libgphoto2
 %{_libdir}/libgphoto2
 %{_libdir}/libgphoto2_port
@@ -172,7 +161,6 @@ rm -rf %{buildroot}
 /lib/udev/rules.d/40-libgphoto2.rules
 
 %files -n %{develname}
-%defattr(-,root,root)
 %{_bindir}/*
 %{_includedir}/gphoto2
 %{_libdir}/*.so
