@@ -15,8 +15,6 @@ URL:		http://sourceforge.net/projects/gphoto/
 Source0:	http://downloads.sourceforge.net/project/gphoto/%{name}/%{version}/%{name}%{major}-%{version}%{?extraversion:%extraversion}.tar.bz2
 Patch0:		libgphoto2-2.5.0-fix-format-errors.patch
 Patch1:		libgphoto2-2.5.0-fix-linking.patch
-# (fc) 2.4.0-7mdv handle up to 8192 photos per directory (Mdv bug #39710) (Robin Rosenberg)
-Patch13:	libgphoto2-2.4.0-increaselimit.patch
 Obsoletes:	hackgphoto2 < %{version}
 Provides:	hackgphoto2
 Conflicts:	gphoto2 <= 2.1.0
