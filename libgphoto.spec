@@ -1,22 +1,22 @@
-%bcond_with hal
-
-%define major		2
-%define major_port	0
-%define libname		%mklibname gphoto %{major}
-%define develname	%mklibname gphoto -d
+%define major 2
+%define major_port 0
+%define libname %mklibname gphoto %{major}
+%define develname %mklibname gphoto -d
 
 %define extraversion %nil
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.4.14
+Version:	2.5.0
 Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
+URL:		http://sourceforge.net/projects/gphoto/
 Source0:	http://downloads.sourceforge.net/project/gphoto/%{name}/%{version}/%{name}%{major}-%{version}%{?extraversion:%extraversion}.tar.bz2
+Patch0:		libgphoto2-2.5.0-fix-format-errors.patch
+Patch1:		libgphoto2-2.5.0-fix-linking.patch
 # (fc) 2.4.0-7mdv handle up to 8192 photos per directory (Mdv bug #39710) (Robin Rosenberg)
 Patch13:	libgphoto2-2.4.0-increaselimit.patch
-URL:		http://sourceforge.net/projects/gphoto/
 Obsoletes:	hackgphoto2 < %{version}
 Provides:	hackgphoto2
 Conflicts:	gphoto2 <= 2.1.0
@@ -26,13 +26,11 @@ BuildRequires:	findutils
 BuildRequires:	perl
 BuildRequires:	libexif-devel
 BuildRequires:	lockdev-devel
-BuildRequires:	udev
+BuildRequires:	udev-devel
 BuildRequires:	libtool-devel
 BuildRequires:	libjpeg-devel
-%if %{with hal}
-BuildRequires:	libhal-devel
-%endif
 BuildRequires:	gd-devel
+BuildRequires:	gettext-devel
 
 %description
 The gPhoto2 project is a universal, free application and library
@@ -49,14 +47,14 @@ Frontends (GUI and command line) are available separately.
 
 %package -n %{libname}
 Summary:	Library to access to digital cameras
+Group:		Graphics
 Requires:	libusb >= 0.1.5
-Requires:	%{name}-common >= 2.4.0-3mdv2008.0
+Requires:	%{name}-common = %{version}-%{release}
 Provides:	%{name} = %{version}-%{release}
 Conflicts:	gphoto2 <= 2.1.0
 Conflicts:	%{libname}-devel < 2.2.1-9mdv2007.0
 Conflicts:	%{name}-common <= 2.4.0-3mdv2008.0
 Conflicts:	%{name}-hotplug <= 2.4.0-3mdv2008.0
-Group:		Graphics
 
 %description -n %{libname}
 This library contains all the functionality to access to modern digital
@@ -74,7 +72,8 @@ Platform-independent files for the "%{libname}" library
 
 %package -n %{develname}
 Summary:	Headers and links to compile against the "%{libname}" library
-Requires:	%{libname} >= %{version}
+Group:		Development/C
+Requires:	%{libname} >= %{version}-%{release}
 Requires:	libexif-devel
 Requires:	multiarch-utils
 Requires:	libusb-devel >= 0.1.11
@@ -82,7 +81,6 @@ Provides:	%{name}-devel = %{version}-%{release}
 Provides:	gphoto%{major}-devel = %{version}-%{release}
 Conflicts:	gphoto2 <= 2.1.0
 Obsoletes:	%{mklibname gphoto 2 -d} < %{version}-%{release}
-Group:		Development/C
 
 %description -n %{develname}
 This package contains all files which one needs to compile programs using
@@ -90,12 +88,12 @@ the "%{libname}" library.
 
 %prep
 %setup -q -n %{name}%{major}-%{version}%{?extraversion:%extraversion}
-%patch13 -p1 -b .increaselimit
+%apply_patches
 
 %build
-
 export udevscriptdir=/lib/udev
 %configure2_5x \
+	--disable-static \
 	--disable-rpath \
 	--with-doc-dir=%{_docdir}/%{libname} \
 	--disable-resmgr \
@@ -112,16 +110,6 @@ export udevscriptdir=/lib/udev
 rm -f %{buildroot}/lib/udev/check-ptp-camera \
       %{buildroot}/lib/udev/check-mtp-device
 
-%if %{with hal}
-# Create HAL FDI file
-install -d -m755 %{buildroot}/usr/share/hal/fdi/information/20thirdparty/
-	export LIBDIR=%{buildroot}%{_libdir}
-	export CAMLIBS=%{buildroot}%{_libdir}/libgphoto2/%{version}
-	export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
-	%{buildroot}%{_libdir}/libgphoto2/print-camera-list hal-fdi | \
-	grep -v "<!-- This file was generated" \
-	> %{buildroot}/%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
-%endif
 
 # # Output udev rules for device identification; this is used by GVfs gphoto2
 # backend and others.
@@ -155,9 +143,6 @@ rm -f %{buildroot}%{_libdir}/*.la
 %{_datadir}/libgphoto2
 %{_libdir}/libgphoto2
 %{_libdir}/libgphoto2_port
-%if %{with hal}
-%{_datadir}/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
-%endif
 /lib/udev/rules.d/40-libgphoto2.rules
 
 %files -n %{develname}
