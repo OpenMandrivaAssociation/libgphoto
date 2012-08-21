@@ -26,7 +26,8 @@ BuildRequires:	libexif-devel
 BuildRequires:	lockdev-devel
 BuildRequires:	udev-devel
 BuildRequires:	libtool-devel
-BuildRequires:	libjpeg-develBuildRequires:	gd-devel
+BuildRequires:	libjpeg-devel
+BuildRequires:	gd-devel
 BuildRequires:	gettext-devel
 
 %description
