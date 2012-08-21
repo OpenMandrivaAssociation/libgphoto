@@ -26,8 +26,7 @@ BuildRequires:	libexif-devel
 BuildRequires:	lockdev-devel
 BuildRequires:	udev-devel
 BuildRequires:	libtool-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	gd-devel
+BuildRequires:	libjpeg-develBuildRequires:	gd-devel
 BuildRequires:	gettext-devel
 
 %description
@@ -89,6 +88,8 @@ the "%{libname}" library.
 %apply_patches
 
 %build
+autoreconf -fi
+
 export udevscriptdir=/lib/udev
 %configure2_5x \
 	--disable-static \
