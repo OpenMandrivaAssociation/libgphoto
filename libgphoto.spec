@@ -1,5 +1,5 @@
-%define major 2
-%define major_port 0
+%define major 6
+%define major_port 10
 %define libname %mklibname gphoto %{major}
 %define develname %mklibname gphoto -d
 
@@ -12,7 +12,7 @@ Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 URL:		http://sourceforge.net/projects/gphoto/
-Source0:	http://downloads.sourceforge.net/project/gphoto/%{name}/%{version}/%{name}%{major}-%{version}%{?extraversion:%extraversion}.tar.bz2
+Source0:	http://downloads.sourceforge.net/project/gphoto/%{name}/%{version}/%{name}2-%{version}%{?extraversion:%extraversion}.tar.bz2
 Patch0:		libgphoto2-2.5.0-fix-format-errors.patch
 Patch1:		libgphoto2-2.5.0-fix-linking.patch
 Obsoletes:	hackgphoto2 < %{version}
@@ -53,6 +53,7 @@ Conflicts:	gphoto2 <= 2.1.0
 Conflicts:	%{libname}-devel < 2.2.1-9mdv2007.0
 Conflicts:	%{name}-common <= 2.4.0-3mdv2008.0
 Conflicts:	%{name}-hotplug <= 2.4.0-3mdv2008.0
+Obsoletes:	%{mklibname gphoto 2} < 2.5
 
 %description -n %{libname}
 This library contains all the functionality to access to modern digital
@@ -85,7 +86,7 @@ This package contains all files which one needs to compile programs using
 the "%{libname}" library.
 
 %prep
-%setup -q -n %{name}%{major}-%{version}%{?extraversion:%extraversion}
+%setup -q -n %{name}2-%{version}%{?extraversion:%extraversion}
 %apply_patches
 
 %build
@@ -120,14 +121,14 @@ mkdir -p %{buildroot}/lib/udev/rules.d
 LD_LIBRARY_PATH=%{buildroot}/%{_libdir} %{buildroot}%{_libdir}/libgphoto2/print-camera-list udev-rules version 136 > %{buildroot}/lib/udev/rules.d/40-libgphoto2.rules
 
 
-%find_lang libgphoto2-2
-%find_lang libgphoto2_port-0
+find_lang libgphoto2-6
+find_lang libgphoto2_port-10
 cat libgphoto2-2.lang libgphoto2_port-0.lang > %{name}.lang
 
 # Multiarch setup
-%multiarch_binaries %buildroot%{_bindir}/gphoto2-config
+%multiarch_binaries %{buildroot}%{_bindir}/gphoto2-config
 
-%multiarch_binaries %buildroot%{_bindir}/gphoto2-port-config
+%multiarch_binaries %{buildroot}%{_bindir}/gphoto2-port-config
 
 # Don't need to package this
 rm -f %{buildroot}%{_docdir}/%{libname}/COPYING
