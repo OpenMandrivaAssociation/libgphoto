@@ -123,7 +123,7 @@ LD_LIBRARY_PATH=%{buildroot}/%{_libdir} %{buildroot}%{_libdir}/libgphoto2/print-
 
 %find_lang libgphoto2-6
 %find_lang libgphoto2_port-10
-cat libgphoto2-2.lang libgphoto2_port-0.lang > %{name}.lang
+cat libgphoto2-6.lang libgphoto2_port-10.lang > %{name}.lang
 
 # Multiarch setup
 %multiarch_binaries %{buildroot}%{_bindir}/gphoto2-config
