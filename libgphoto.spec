@@ -8,7 +8,7 @@
 Summary:	Library to access digital cameras
 Name:		libgphoto
 Version:	2.5.0
-Release:	2
+Release:	3
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 URL:		http://sourceforge.net/projects/gphoto/
@@ -78,6 +78,7 @@ Requires:	multiarch-utils
 Requires:	libusb-devel >= 0.1.11
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	gphoto%{major}-devel = %{version}-%{release}
+Provides:	libgphoto-devel = %{version}-%{release}
 Conflicts:	gphoto2 <= 2.1.0
 Obsoletes:	%{mklibname gphoto 2 -d} < %{version}-%{release}
 
