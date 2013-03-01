@@ -10,7 +10,7 @@
 Summary:	Library to access digital cameras
 Name:		libgphoto
 Version:	2.5.1.1
-Release:	2
+Release:	3
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Url:		http://sourceforge.net/projects/gphoto/
@@ -70,6 +70,7 @@ Platform-independent files for the "%{libname}" library
 %package -n %{devname}
 Summary:	Headers and links to compile against the "%{libname}" library
 Group:		Development/C
+Requires:	%{name}-common >= %{version}-%{release}
 Requires:	%{libname} >= %{version}-%{release}
 Requires:	%{libport} >= %{version}-%{release}
 Requires:	multiarch-utils
