@@ -10,7 +10,7 @@
 Summary:	Library to access digital cameras
 Name:		libgphoto
 Version:	2.5.1.1
-Release:	4
+Release:	5
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Url:		http://sourceforge.net/projects/gphoto/
@@ -45,10 +45,8 @@ Frontends (GUI and command line) are available separately.
 Summary:	Library to access to digital cameras
 Group:		Graphics
 Provides:	%{name} = %{version}-%{release}
-Provides:	libgphoto-hotplug
+Suggests:	%{name}-common = %{EVRD}
 Obsoletes:	%{_lib}gphoto6 < 2.5.1.1-2
-Requires:	%{name}-common = %{EVRD}
-Requires:	%{libport} = %{EVRD}
 
 %description -n %{libname}
 This library contains all the functionality to access to modern digital
