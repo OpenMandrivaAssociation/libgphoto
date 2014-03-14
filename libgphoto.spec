@@ -9,8 +9,8 @@
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.5.2
-Release:	5
+Version:	2.5.3.1
+Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Url:		http://sourceforge.net/projects/gphoto/
@@ -27,6 +27,8 @@ BuildRequires:	pkgconfig(libudev)
 BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(lockdev)
 BuildRequires:	pkgconfig(zlib)
+BuildRequires:	systemd
+Requires:		lockdev
 
 %description
 The gPhoto2 project is a universal, free application and library
