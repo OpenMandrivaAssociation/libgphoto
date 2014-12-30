@@ -1,7 +1,7 @@
 %define extraversion %nil
 %define sname gphoto2
 %define major 6
-%define majport 10
+%define majport 12
 %define libname %mklibname %{sname}_ %{major}
 %define libport %mklibname %{sname}_port %{majport}
 %define devname %mklibname gphoto -d
@@ -117,8 +117,8 @@ rm -f %{buildroot}/lib/udev/check-ptp-camera \
 mkdir -p %{buildroot}/lib/udev/rules.d
 LD_LIBRARY_PATH=%{buildroot}/%{_libdir} %{buildroot}%{_libdir}/libgphoto2/print-camera-list udev-rules version 136 > %{buildroot}/lib/udev/rules.d/40-libgphoto2.rules
 
-%find_lang libgphoto2-6
-cat libgphoto2-6.lang  > %{name}.lang
+%find_lang libgphoto2_port-12
+cat libgphoto2-6.lang libgphoto2_port-12.lang > %{name}.lang
 
 # Multiarch setup
 %multiarch_binaries %{buildroot}%{_bindir}/gphoto2-config
