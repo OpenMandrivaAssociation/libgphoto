@@ -1,16 +1,16 @@
 %define extraversion %nil
-%define sname	gphoto2
-%define major	6
-%define majport	10
-%define libname	%mklibname %{sname}_ %{major}
-%define libport	%mklibname %{sname}_port %{majport}
-%define devname	%mklibname gphoto -d
+%define sname gphoto2
+%define major 6
+%define majport 10
+%define libname %mklibname %{sname}_ %{major}
+%define libport %mklibname %{sname}_port %{majport}
+%define devname %mklibname gphoto -d
 
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.5.4
-Release:	4
+Version:	2.5.6
+Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Url:		http://sourceforge.net/projects/gphoto/
@@ -91,7 +91,7 @@ the "%{libname}" library.
 autoreconf -fi
 
 export udevscriptdir=/lib/udev
-%configure2_5x \
+%configure \
 	--disable-static \
 	--disable-rpath \
 	--with-doc-dir=%{_docdir}/%{libname} \
