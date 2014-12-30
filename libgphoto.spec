@@ -117,6 +117,7 @@ rm -f %{buildroot}/lib/udev/check-ptp-camera \
 mkdir -p %{buildroot}/lib/udev/rules.d
 LD_LIBRARY_PATH=%{buildroot}/%{_libdir} %{buildroot}%{_libdir}/libgphoto2/print-camera-list udev-rules version 136 > %{buildroot}/lib/udev/rules.d/40-libgphoto2.rules
 
+%find_lang libgphoto2-6
 %find_lang libgphoto2_port-12
 cat libgphoto2-6.lang libgphoto2_port-12.lang > %{name}.lang
 
