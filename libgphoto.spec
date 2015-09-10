@@ -92,12 +92,17 @@ autoreconf -fi
 
 export udevscriptdir=/lib/udev
 %configure \
+	udevscriptdir="/lib/udev" \
 	--disable-static \
 	--disable-rpath \
 	--with-doc-dir=%{_docdir}/%{libname} \
-	--disable-resmgr \
-	--disable-baudboy \
-	--disable-ttylock
+	--with-drivers=all
+
+# Don't use rpath!
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libgphoto2_port/libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libgphoto2_port/libtool
 
 %make
 
@@ -150,4 +155,3 @@ rm -f %{buildroot}%{_docdir}/%{libname}/COPYING
 %docdir %{_docdir}/%{libname}
 %{_docdir}/%{libname}
 %doc ABOUT-NLS ChangeLog HACKING MAINTAINERS TESTERS
-
