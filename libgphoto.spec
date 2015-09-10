@@ -1,7 +1,7 @@
 %define extraversion %nil
 %define sname	gphoto2
 %define major	6
-%define majport	10
+%define majport	12
 %define libname	%mklibname %{sname}_ %{major}
 %define libport	%mklibname %{sname}_port %{majport}
 %define devname	%mklibname gphoto -d
@@ -9,7 +9,7 @@
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.5.4
+Version:	2.5.8
 Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
@@ -28,7 +28,7 @@ BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(lockdev)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	systemd
-Requires:		lockdev
+Requires:	lockdev
 
 %description
 The gPhoto2 project is a universal, free application and library
