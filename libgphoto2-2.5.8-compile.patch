@@ -1,0 +1,66 @@
+--- libgphoto2-2.5.8/camlibs/ax203/ax203_compress_jpeg.c.omv~	2015-09-30 19:07:26.330343835 +0200
++++ libgphoto2-2.5.8/camlibs/ax203/ax203_compress_jpeg.c	2015-09-30 19:07:32.989277631 +0200
+@@ -29,7 +29,7 @@
+ 
+ #include "ax203.h"
+ #ifdef HAVE_LIBJPEG
+-#include "jpeg_memsrcdest.h"
++#include <jpeglib.h>
+ #endif
+ 
+ #if defined(HAVE_LIBGD) && defined(HAVE_LIBJPEG)
+--- libgphoto2-2.5.8/camlibs/ax203/ax203.c.omv~	2015-09-30 19:05:57.804230154 +0200
++++ libgphoto2-2.5.8/camlibs/ax203/ax203.c	2015-09-30 19:07:15.568450961 +0200
+@@ -35,7 +35,7 @@
+ #include <gphoto2/gphoto2-result.h>
+ #include "ax203.h"
+ #ifdef HAVE_LIBJPEG
+-#include "jpeg_memsrcdest.h"
++#include <jpeglib.h>
+ #endif
+ 
+ static const struct eeprom_info {
+--- libgphoto2-2.5.8/camlibs/ax203/Makefile-files.omv~	2015-09-30 19:04:12.043306259 +0200
++++ libgphoto2-2.5.8/camlibs/ax203/Makefile-files	2015-09-30 19:04:30.012121948 +0200
+@@ -3,7 +3,7 @@ camlibdoc_DATA += ax203/README.ax203-com
+ 
+ EXTRA_LTLIBRARIES += ax203.la
+ 
+-ax203_la_SOURCES = ax203/library.c ax203/ax203.c ax203/ax203.h ax203/ax203_decode_yuv.c ax203/ax203_decode_yuv_delta.c ax203/ax203_compress_jpeg.c ax203/jpeg_memsrcdest.h ax203/jpeg_memsrcdest.c ax203/tinyjpeg.c ax203/tinyjpeg.h ax203/tinyjpeg-internal.h ax203/jidctflt.c
++ax203_la_SOURCES = ax203/library.c ax203/ax203.c ax203/ax203.h ax203/ax203_decode_yuv.c ax203/ax203_decode_yuv_delta.c ax203/ax203_compress_jpeg.c ax203/tinyjpeg.c ax203/tinyjpeg.h ax203/tinyjpeg-internal.h ax203/jidctflt.c
+ ax203_la_LDFLAGS = $(camlib_ldflags)
+ ax203_la_DEPENDENCIES = $(camlib_dependencies)
+ ax203_la_LIBADD = $(camlib_libadd) @LIBGD_LIBS@ @LIBJPEG@
+--- libgphoto2-2.5.8/camlibs/jl2005c/jl2005bcd_decompress.c.omv~	2015-09-30 19:09:56.443991612 +0200
++++ libgphoto2-2.5.8/camlibs/jl2005c/jl2005bcd_decompress.c	2015-09-30 19:10:03.144933391 +0200
+@@ -36,7 +36,7 @@
+ #ifdef HAVE_LIBJPEG
+ #include "gphoto2-endian.h"
+ #include "jl2005bcd_decompress.h"
+-#include "jpeg_memsrcdest.h"
++#include <jpeglib.h>
+ #include <bayer.h>
+ #include "img_enhance.h"
+ #include <math.h>
+--- libgphoto2-2.5.8/camlibs/jl2005c/Makefile-files.omv~	2015-09-30 19:09:31.216210449 +0200
++++ libgphoto2-2.5.8/camlibs/jl2005c/Makefile-files	2015-09-30 19:09:36.603163769 +0200
+@@ -5,8 +5,6 @@ EXTRA_LTLIBRARIES += jl2005c.la
+ 
+ jl2005c_la_SOURCES = jl2005c/library.c\
+ 		    jl2005c/jl2005c.c\
+-		    jl2005c/jpeg_memsrcdest.c \
+-		    jl2005c/jpeg_memsrcdest.h \
+ 		    jl2005c/jl2005bcd_decompress.c\
+ 		    jl2005c/jl2005bcd_decompress.h\
+ 		    jl2005c/jl2005c.h\
+--- libgphoto2-2.5.8/camlibs/ptp2/chdk.c.omv~	2015-09-30 19:10:54.341487324 +0200
++++ libgphoto2-2.5.8/camlibs/ptp2/chdk.c	2015-09-30 19:11:02.972411918 +0200
+@@ -1128,7 +1128,7 @@ chdk_camera_capture (Camera *camera, Cam
+ 	if (ret != GP_OK) return ret;
+ 
+ 	lua = malloc(strlen(luascript)+1);
+-	sprintf(lua,luascript); /* This expands the %q inside the string too ... do not optimize away. */
++	sprintf(lua, "%s", luascript); /* This expands the %q inside the string too ... do not optimize away. */
+ 	ret = chdk_generic_script_run (params, lua, &table, &retint, context);
+ 	free (lua);
+ 	GP_LOG_D("rlib_shoot returned table %s, retint %d\n", table, retint);
