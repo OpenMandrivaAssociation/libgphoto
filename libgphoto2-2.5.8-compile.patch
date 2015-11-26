@@ -53,14 +53,3 @@
  		    jl2005c/jl2005bcd_decompress.c\
  		    jl2005c/jl2005bcd_decompress.h\
  		    jl2005c/jl2005c.h\
---- libgphoto2-2.5.8/camlibs/ptp2/chdk.c.omv~	2015-09-30 19:10:54.341487324 +0200
-+++ libgphoto2-2.5.8/camlibs/ptp2/chdk.c	2015-09-30 19:11:02.972411918 +0200
-@@ -1128,7 +1128,7 @@ chdk_camera_capture (Camera *camera, Cam
- 	if (ret != GP_OK) return ret;
- 
- 	lua = malloc(strlen(luascript)+1);
--	sprintf(lua,luascript); /* This expands the %q inside the string too ... do not optimize away. */
-+	sprintf(lua, "%s", luascript); /* This expands the %q inside the string too ... do not optimize away. */
- 	ret = chdk_generic_script_run (params, lua, &table, &retint, context);
- 	free (lua);
- 	GP_LOG_D("rlib_shoot returned table %s, retint %d\n", table, retint);
