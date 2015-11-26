@@ -9,8 +9,8 @@
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.5.8
-Release:	1
+Version:	2.5.9
+Release:	0.1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Url:		http://sourceforge.net/projects/gphoto/
@@ -118,8 +118,8 @@ mkdir -p %{buildroot}/lib/udev/rules.d
 LD_LIBRARY_PATH=%{buildroot}/%{_libdir} %{buildroot}%{_libdir}/libgphoto2/print-camera-list udev-rules version 136 > %{buildroot}/lib/udev/rules.d/40-libgphoto2.rules
 
 %find_lang libgphoto2-6
-%find_lang libgphoto2_port-10
-cat libgphoto2-6.lang libgphoto2_port-10.lang > %{name}.lang
+%find_lang libgphoto2_port-12
+cat libgphoto2-6.lang libgphoto2_port-12.lang > %{name}.lang
 
 # Multiarch setup
 %multiarch_binaries %{buildroot}%{_bindir}/gphoto2-config
