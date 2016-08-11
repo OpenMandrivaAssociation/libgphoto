@@ -1,4 +1,2 @@
-removed_sources:
-  libgphoto2-2.5.8.tar.bz2: 976feb07d51026e6ca647f9fa333c500c5e0c041
 sources:
-  libgphoto2-2.5.9.tar.bz2: 6da9fe37d7fee12eefea4dc1d97139c7ef694ecf
+  libgphoto2-2.5.10.tar.bz2: dc1a1ed203d52360c10dc126f70e4f433a9f174e

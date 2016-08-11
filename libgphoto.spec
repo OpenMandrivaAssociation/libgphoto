@@ -9,7 +9,7 @@
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.5.9
+Version:	2.5.10
 Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
@@ -134,6 +134,7 @@ cat libgphoto2-6.lang libgphoto2_port-12.lang > %{name}.lang
 
 # Don't need to package this
 rm -f %{buildroot}%{_docdir}/%{libname}/COPYING
+rm -f %{buildroot}%{_datadir}/libgphoto2_port/*/vcamera/README.txt
 
 %files -n %{libname}
 %{_libdir}/libgphoto2.so.%{major}*
