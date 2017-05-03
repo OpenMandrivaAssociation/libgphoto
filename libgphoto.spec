@@ -9,7 +9,7 @@
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.5.10
+Version:	2.5.13
 Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
@@ -29,7 +29,7 @@ BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(lockdev)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	systemd
-Requires:		lockdev
+Requires:	lockdev
 
 %description
 The gPhoto2 project is a universal, free application and library
@@ -69,7 +69,7 @@ Summary:	Non-library files for the "%{libname}" library
 Group:		Graphics
 
 %description common
-Platform-independent files for the "%{libname}" library
+Platform-independent files for the "%{libname}" library.
 
 %package -n %{devname}
 Summary:	Headers and links to compile against the "%{libname}" library
