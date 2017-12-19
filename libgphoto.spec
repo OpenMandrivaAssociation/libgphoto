@@ -127,10 +127,12 @@ LD_LIBRARY_PATH=%{buildroot}/%{_libdir} %{buildroot}%{_libdir}/libgphoto2/print-
 %find_lang libgphoto2_port-12
 cat libgphoto2-6.lang libgphoto2_port-12.lang > %{name}.lang
 
+%if %{mdvver} <= 3000000
 # Multiarch setup
 %multiarch_binaries %{buildroot}%{_bindir}/gphoto2-config
 
 %multiarch_binaries %{buildroot}%{_bindir}/gphoto2-port-config
+%endif
 
 # Don't need to package this
 rm -f %{buildroot}%{_docdir}/%{libname}/COPYING
