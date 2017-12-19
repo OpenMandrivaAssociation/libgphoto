@@ -9,7 +9,7 @@
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.5.13
+Version:	2.5.16
 Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
@@ -28,7 +28,7 @@ BuildRequires:	pkgconfig(libudev)
 BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(lockdev)
 BuildRequires:	pkgconfig(zlib)
-BuildRequires:	systemd
+BuildRequires:	pkgconfig(systemd)
 Requires:	lockdev
 
 %description
