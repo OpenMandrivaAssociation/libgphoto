@@ -10,7 +10,7 @@
 Summary:	Library to access digital cameras
 Name:		libgphoto
 Version:	2.5.18
-Release:	1
+Release:	2
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Url:		http://sourceforge.net/projects/gphoto/
