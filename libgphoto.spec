@@ -9,8 +9,8 @@
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.5.18
-Release:	3
+Version:	2.5.21
+Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Url:		http://sourceforge.net/projects/gphoto/
@@ -84,8 +84,7 @@ This package contains all files which one needs to compile programs using
 the "%{libname}" library.
 
 %prep
-%setup -qn lib%{sname}-%{version}%{?extraversion:%extraversion}
-%apply_patches
+%autosetup -n lib%{sname}-%{version}%{?extraversion:%extraversion} -p1
 
 %build
 autoreconf -fi
@@ -104,10 +103,10 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libgphoto2_port/libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libgphoto2_port/libtool
 
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 # obsolete with recent udev or hal
 rm -f %{buildroot}/lib/udev/check-ptp-camera \
