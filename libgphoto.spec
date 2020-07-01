@@ -1,6 +1,6 @@
 # wine uses libgphoto
 %ifarch %{x86_64}
-%bcond_with compat32
+%bcond_without compat32
 %endif
 
 %define extraversion %nil
@@ -43,6 +43,8 @@ BuildRequires:	devel(libudev)
 BuildRequires:	devel(libusb-1.0)
 BuildRequires:	devel(libz)
 BuildRequires:	devel(libsystemd)
+BuildRequires:	devel(libwebp)
+BuildRequires:	devel(libgd)
 %endif
 
 %description
@@ -97,13 +99,54 @@ Provides:	%{name}-devel = %{version}-%{release}
 This package contains all files which one needs to compile programs using
 the "%{libname}" library.
 
+%if %{with compat32}
+%package -n %{lib32name}
+Summary:	Library to access to digital cameras (32-bit)
+Group:		Graphics
+
+%description -n %{lib32name}
+This library contains all the functionality to access to modern digital
+cameras via USB or the serial port.
+
+%package -n %{lib32port}
+Summary:	Library to access to digital cameras (32-bit)
+Group:		Graphics
+
+%description -n %{lib32port}
+This library contains all the functionality to access to modern digital
+cameras via USB or the serial port.
+
+%package -n %{dev32name}
+Summary:	Headers and links to compile against the "%{lib32name}" library (32-bit)
+Group:		Development/C
+Requires:	%{devname} = %{version}-%{release}
+Requires:	%{lib32name} >= %{version}-%{release}
+Requires:	%{lib32port} >= %{version}-%{release}
+
+%description -n %{dev32name}
+This package contains all files which one needs to compile programs using
+the "%{lib32name}" library.
+%endif
+
 %prep
 %autosetup -n lib%{sname}-%{version}%{?extraversion:%extraversion} -p1
-
-%build
 autoreconf -fi
 
 export udevscriptdir=/lib/udev
+
+export CONFIGURE_TOP="$(pwd)"
+
+%if %{with compat32}
+mkdir build32
+cd build32
+%configure32 \
+	udevscriptdir="/lib/udev" \
+	--with-drivers=all
+cd ..
+%endif
+
+mkdir build
+cd build
 %configure \
 	udevscriptdir="/lib/udev" \
 	--disable-static \
@@ -117,10 +160,17 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libgphoto2_port/libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libgphoto2_port/libtool
 
-%make_build
+%build
+%if %{with compat32}
+%make_build -C build32
+%endif
+%make_build -C build
 
 %install
-%make_install
+%if %{with compat32}
+%make_install -C build32
+%endif
+%make_install -C build
 
 # obsolete with recent udev or hal
 rm -f %{buildroot}/lib/udev/check-ptp-camera \
@@ -161,6 +211,21 @@ rm -f %{buildroot}%{_datadir}/libgphoto2_port/*/vcamera/README.txt
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*
 %{_mandir}/man3/*
-%docdir %{_docdir}/%{libname}
 %{_docdir}/%{libname}
 %doc ABOUT-NLS ChangeLog MAINTAINERS TESTERS
+%optional %doc %{_docdir}/libgphoto2
+%optional %doc %{_docdir}/libgphoto2_port
+
+%if %{with compat32}
+%files -n %{lib32name}
+%{_prefix}/lib/libgphoto2.so.%{major}*
+%{_prefix}/lib/libgphoto2
+
+%files -n %{lib32port}
+%{_prefix}/lib/libgphoto2_port.so.%{majport}*
+%{_prefix}/lib/libgphoto2_port
+
+%files -n %{dev32name}
+%{_prefix}/lib/*.so
+%{_prefix}/lib/pkgconfig/*
+%endif
