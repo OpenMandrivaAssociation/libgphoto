@@ -1,3 +1,8 @@
+# wine uses libgphoto
+%ifarch %{x86_64}
+%bcond_with compat32
+%endif
+
 %define extraversion %nil
 %define sname gphoto2
 %define major 6
@@ -5,12 +10,14 @@
 %define libname %mklibname %{sname}_ %{major}
 %define libport %mklibname %{sname}_port %{majport}
 %define devname %mklibname gphoto -d
-
+%define lib32name %mklib32name %{sname}_ %{major}
+%define lib32port %mklib32name %{sname}_port %{majport}
+%define dev32name %mklib32name gphoto -d
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.5.23
-Release:	2
+Version:	2.5.25
+Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Url:		http://sourceforge.net/projects/gphoto/
@@ -26,10 +33,17 @@ BuildRequires:	libtool-devel
 BuildRequires:	pkgconfig(libexif)
 BuildRequires:	pkgconfig(libudev)
 BuildRequires:	pkgconfig(libusb-1.0)
-BuildRequires:	pkgconfig(lockdev)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(systemd)
-Requires:	lockdev
+
+%if %{with compat32}
+BuildRequires:	devel(libltdl)
+BuildRequires:	devel(libexif)
+BuildRequires:	devel(libudev)
+BuildRequires:	devel(libusb-1.0)
+BuildRequires:	devel(libz)
+BuildRequires:	devel(libsystemd)
+%endif
 
 %description
 The gPhoto2 project is a universal, free application and library
@@ -149,4 +163,4 @@ rm -f %{buildroot}%{_datadir}/libgphoto2_port/*/vcamera/README.txt
 %{_mandir}/man3/*
 %docdir %{_docdir}/%{libname}
 %{_docdir}/%{libname}
-%doc ABOUT-NLS ChangeLog HACKING MAINTAINERS TESTERS
+%doc ABOUT-NLS ChangeLog MAINTAINERS TESTERS
