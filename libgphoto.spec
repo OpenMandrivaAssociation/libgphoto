@@ -7,17 +7,21 @@
 %define sname gphoto2
 %define major 6
 %define majport 12
-%define libname %mklibname %{sname}_ %{major}
-%define libport %mklibname %{sname}_port %{majport}
+%define oldlibname %mklibname %{sname}_ 6
+%define libname %mklibname %{sname}
+%define oldlibport %mklibname %{sname}_port 12
+%define libport %mklibname %{sname}_port
 %define devname %mklibname gphoto -d
-%define lib32name %mklib32name %{sname}_ %{major}
-%define lib32port %mklib32name %{sname}_port %{majport}
+%define oldlib32name %mklib32name %{sname}_ 6
+%define lib32name %mklib32name %{sname}
+%define oldlib32port %mklib32name %{sname}_port 12
+%define lib32port %mklib32name %{sname}_port
 %define dev32name %mklib32name gphoto -d
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.5.30
-Release:	2
+Version:	2.5.31
+Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
 Url:		http://sourceforge.net/projects/gphoto/
@@ -71,6 +75,7 @@ Group:		Graphics
 Provides:	%{name} = %{version}-%{release}
 Suggests:	%{name}-common = %{EVRD}
 Obsoletes:	%{_lib}gphoto6 < 2.5.1.1-2
+%rename %{oldlibname}
 
 %description -n %{libname}
 This library contains all the functionality to access to modern digital
@@ -80,6 +85,7 @@ cameras via USB or the serial port.
 Summary:	Library to access to digital cameras
 Group:		Graphics
 Conflicts:	%{_lib}gphoto6 < 2.5.1.1-2
+%rename %{oldlibport}
 
 %description -n %{libport}
 This library contains all the functionality to access to modern digital
@@ -108,6 +114,7 @@ the "%{libname}" library.
 %package -n %{lib32name}
 Summary:	Library to access to digital cameras (32-bit)
 Group:		Graphics
+%rename %{oldlib32name}
 
 %description -n %{lib32name}
 This library contains all the functionality to access to modern digital
@@ -116,6 +123,7 @@ cameras via USB or the serial port.
 %package -n %{lib32port}
 Summary:	Library to access to digital cameras (32-bit)
 Group:		Graphics
+%rename %{oldlib32port}
 
 %description -n %{lib32port}
 This library contains all the functionality to access to modern digital
