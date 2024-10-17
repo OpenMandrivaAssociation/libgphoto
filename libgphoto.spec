@@ -24,7 +24,7 @@ Version:	2.5.31
 Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
-Url:		http://sourceforge.net/projects/gphoto/
+Url:		https://sourceforge.net/projects/gphoto/
 Source0:	http://downloads.sourceforge.net/project/gphoto/%{name}/%{version}/%{name}2-%{version}%{?extraversion:%extraversion}.tar.bz2
 
 BuildRequires:	findutils
