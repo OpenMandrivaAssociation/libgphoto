@@ -27,6 +27,11 @@ Group:		Graphics
 Url:		https://sourceforge.net/projects/gphoto/
 Source0:	http://downloads.sourceforge.net/project/gphoto/%{name}/%{version}/%{name}2-%{version}%{?extraversion:%extraversion}.tar.bz2
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	findutils
 BuildRequires:	perl
 BuildRequires:	gd-devel
