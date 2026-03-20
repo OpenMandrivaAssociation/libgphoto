@@ -148,6 +148,8 @@ the "%{lib32name}" library.
 
 %prep
 %autosetup -n lib%{sname}-%{version}%{?extraversion:%extraversion} -p1
+export LIBTOOLIZE=libtoolize
+export LIBTOOL=libtool
 autoreconf -fi
 
 export udevscriptdir=/lib/udev
