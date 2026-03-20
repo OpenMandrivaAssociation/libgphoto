@@ -20,7 +20,7 @@
 
 Summary:	Library to access digital cameras
 Name:		libgphoto
-Version:	2.5.32
+Version:	2.5.33
 Release:	1
 License:	LGPL+ and GPLv2 and (LGPL+ or BSD-like)
 Group:		Graphics
@@ -44,7 +44,7 @@ BuildRequires:	pkgconfig(libusb-1.0)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(systemd)
 BuildRequires:	pkgconfig(liblzma)
-BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(libxml-2.0) >= 2.15.2
 BuildRequires:	icu-devel
 
 %if %{with compat32}
@@ -57,7 +57,7 @@ BuildRequires:	devel(libsystemd)
 BuildRequires:	devel(libwebp)
 BuildRequires:	devel(libgd)
 BuildRequires:	devel(liblzma)
-BuildRequires:	devel(libxml2)
+BuildRequires:	devel(libxml2) >= 2.15.2
 BuildRequires:	libicu-devel
 %endif
 
